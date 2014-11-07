@@ -9,23 +9,23 @@ window.onload = function() {
 
   var nodes = d3.range(5)
                 .map(function() {
-
                   return {
-
                     radius: 10,
-
                     x: Math.random() * width,
-
                     y: Math.random() * height
-
                   };
-
                 });
 
-  svg.selectAll('circle').data(nodes)
+  var circles = svg.selectAll('circle').data(nodes)
                          .enter()
                          .append('circle')
                          .attr('r', function(d) { return d.radius; })
                          .attr('cx', function(d) {return d.x; })
-                         .attr('cy', function(d) {return d.y; })
+                         .attr('cy', function(d) {return d.y; });
+
+  setInterval(function() {
+    circles.transition()
+           .attr('cx', function() {return Math.random() * width; })
+           .attr('cy', function() {return Math.random() * height; });
+  }, 1000);
 };
