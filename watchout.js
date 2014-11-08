@@ -28,13 +28,21 @@ window.onload = function() {
                          .attr('cx', function(d) {return d.x; })
                          .attr('cy', function(d) {return d.y; });
 
-  var playerCircle = svg.selectAll('.player').data([player])
-                    .enter()
+  var drag = d3.behavior.drag()
+            .on('drag',function(e){
+              radius = +this.attributes.getNamedItem('r').value;
+              d3.select(this)
+                .attr('cx', Math.max(Math.min(d3.event.x, width - radius), radius))
+                .attr('cy', Math.max(Math.min(d3.event.y, height - radius), radius));
+            });
+
+  var playerCircle = svg
                     .append('circle')
                     .attr('class','player')
-                    .attr('r', function(d) { return d.radius; })
-                    .attr('cx', function(d) {return d.x; })
-                    .attr('cy', function(d) {return d.y; });
+                    .attr('r', player.radius)
+                    .attr('cx', player.x)
+                    .attr('cy', player.y)
+                    .call(drag);
 
   setInterval(function() {
     circles.transition()
