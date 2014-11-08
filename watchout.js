@@ -49,4 +49,14 @@ window.onload = function() {
            .attr('cx', function() {return Math.random() * width; })
            .attr('cy', function() {return Math.random() * height; });
   }, 1000);
+
+
+  setInterval(function() {
+    // debugger;
+    for (var i = 1; i < nodes.length; i++) {
+      if(Math.sqrt( Math.pow( nodes[i].x - player.x, 2 ) + Math.pow( nodes[i].y - player.y, 2 ) ) < player.radius + nodes[i].radius) {
+        alert('hello collision!');
+      }
+    }
+  }, 100)
 };
